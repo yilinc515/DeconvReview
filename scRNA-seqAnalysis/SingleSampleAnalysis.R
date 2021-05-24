@@ -324,7 +324,7 @@ pheatmap(log2(tab+10), color=colorRampPalette(c("white", "blue"))(101))
 
 # ------------
 # Cell Type annotation with gene expression heatmap (manual) 
-# For Sample 1
+# For Sample (02)
 # ------------
 func1 <- function(x)
   if (x == "6" || x == "16") {
@@ -379,6 +379,7 @@ sample_annotation <-data.frame((matrix(ncol = 2, nrow = length(colnames(sce.hvg)
 sample_annotation[, 1] <- colnames(sce.hvg)
 sample_annotation[, 2] <- colData(sce.hvg)$manual_annotation
 write.table(sample_annotation, file = "cellAnnotations.txt", quote = FALSE, sep = "\t", row.names = FALSE, col.names = FALSE)
+
 
 # ------------
 # Run InferCNV 
