@@ -340,12 +340,20 @@ func1 <- function(x)
   } else if (x == "13") {
     "T-cells"
   } else {
-    # paste("Malignant cells", x) # keep clustering label for inferCNV purposes
-    "Malignant cells"
+    paste("X02-tumor-", x) # keep clustering label for inferCNV purposes
+    # "Malignant cells"
   }
 colData(sce.hvg)$manual_annotation <- mapply(func1, sce.hvg$label)
 # label the original
 colData(sce)$manual_annotation <- mapply(func1, sce$label)
+
+
+
+#-------------
+# Save data
+#-------------
+save(sce.hvg, sce, file = "sce02.RData")
+save(sce.hvg, sce, file = "sce02c.RData")
 
 
 

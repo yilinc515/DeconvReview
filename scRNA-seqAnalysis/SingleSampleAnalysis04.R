@@ -327,6 +327,9 @@ tab <- table(Assigned=pred$pruned.labels, Cluster=sce04.hvg$label)
 pheatmap(log2(tab+10), color=colorRampPalette(c("white", "blue"))(101))
 
 
+
+
+
 # ------------
 # Cell Type annotation with gene expression heatmap (manual) 
 # For Sample 1
@@ -339,11 +342,20 @@ func1 <- function(x)
   } else if (x == "7" || x == "9") {
     "Fibroblasts"
   } else {
-    # paste("Malignant cells", x) # keep clustering label for inferCNV
-    "Malignant cells"
+    paste("X04-tumor-", x) # keep clustering label for inferCNV
+    # "Malignant cells"
   }
 colData(sce04)$manual_annotation <- mapply(func1, sce04$label)
 colData(sce04.hvg)$manual_annotation <- mapply(func1, sce04.hvg$label)
+
+
+
+#-------------
+# Save data
+#-------------
+save(sce04.hvg, sce04, file = "sce04c.RData")
+save(sce04.hvg, sce04, file = "sce04.RData")
+
 
 
 

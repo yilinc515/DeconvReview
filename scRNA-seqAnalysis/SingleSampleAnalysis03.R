@@ -334,10 +334,10 @@ func1 <- function(x)
   } else if (x == "5" || x == "6" || x == "7") {
     "T-cells"
   } else if (x == "1") {
-    "Ambiguous"
+    "X03-tumor-Ambiguous"
   } else {
-    # paste("Malignant cells", x) # keep clustering label for inferCNV
-    "Malignant Cells"
+    paste("X03-tumor-", x) # keep clustering label for inferCNV
+    # "Malignant cells"
   }
 colData(sce03)$manual_annotation <- mapply(func1, sce03$label)
 colData(sce03.hvg)$manual_annotation <- mapply(func1, sce03.hvg$label)
@@ -346,6 +346,7 @@ colData(sce03.hvg)$manual_annotation <- mapply(func1, sce03.hvg$label)
 #-------------
 # Save data
 #-------------
+save(sce03.hvg, sce03, file = "sce03c.RData")
 save(sce03.hvg, sce03, file = "sce03.RData")
 
 
