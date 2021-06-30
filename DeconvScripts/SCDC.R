@@ -38,7 +38,6 @@ bulk.eset = ExpressionSet(assayData = data.matrix(assays(gse)$counts), phenoData
 
 # ------
 # load single-cell data 
-# Note that Bisque won't run if all samples have sc and bulk, so X03 is taken out
 # ------
 load("sce02.RData")
 load("sce03.RData")
@@ -124,8 +123,9 @@ sc04.eset = ExpressionSet(assayData = data.matrix(exprs04.matrix), phenoData =  
 # combine expression matrix since MuSiC starts with multi-subject scRNA-seq data
 # ------
 library(Seurat)
-sc.exprs.matrix <- RowMergeSparseMatrices(exprs02.matrix, exprs03.matrix)
-sc.exprs.matrix <- RowMergeSparseMatrices(sc.exprs.matrix, exprs04.matrix)
+#sc.exprs.matrix <- RowMergeSparseMatrices(exprs02.matrix, exprs03.matrix)
+#sc.exprs.matrix <- RowMergeSparseMatrices(sc.exprs.matrix, exprs04.matrix)
+sc.exprs.matrix <- RowMergeSparseMatrices(exprs02.matrix, exprs04.matrix)
 
 # make sure the colnames are unique
 colnames(sc.exprs.matrix) <- make.names(colnames(sc.exprs.matrix))
@@ -133,8 +133,9 @@ colnames(sc.exprs.matrix) <- make.names(colnames(sc.exprs.matrix))
 # ------
 # combine phenotype matrix (colData)
 # ------
-sc.pheno.matrix <- rbind(pheno02.matrix, pheno03.matrix)
-sc.pheno.matrix <- rbind(sc.pheno.matrix, pheno04.matrix)
+#sc.pheno.matrix <- rbind(pheno02.matrix, pheno03.matrix)
+#sc.pheno.matrix <- rbind(sc.pheno.matrix, pheno04.matrix)
+sc.pheno.matrix <- rbind(pheno02.matrix, pheno04.matrix)
 
 # convert DFrame to data.frame
 sc.pheno.matrix <- as.data.frame(sc.pheno.matrix)
@@ -190,4 +191,5 @@ bulk.ens2 <- SCDC_ENSEMBLE(bulk.eset = bulk.eset, sc.eset.list = list(X02 = sc02
                           sample = "SubjectName", truep = NULL, ct.sub =  c("Macrophages", "Monocytes", "Fibroblasts",  "Endothelial cells", "T-cells", "B-cells", "Malignant cells"), search.length = 0.01, grid.search = T)  
 
 
-bulk.ens$prop.est
+# calculate cell prop from  linear combination of a list of proportions
+wt_prop(bulk.ens$w_table[1, 1:2], bulk.ens$prop.only)

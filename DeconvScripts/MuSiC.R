@@ -76,15 +76,16 @@ pheno04.matrix <- colData(sce04.copy)
 # combine expression matrix since MuSiC starts with multi-subject scRNA-seq data
 # ------
 library(Seurat)
-sc.exprs.matrix <- RowMergeSparseMatrices(exprs02.matrix, exprs03.matrix)
-sc.exprs.matrix <- RowMergeSparseMatrices(sc.exprs.matrix, exprs04.matrix)
-
+#sc.exprs.matrix <- RowMergeSparseMatrices(exprs02.matrix, exprs03.matrix)
+#sc.exprs.matrix <- RowMergeSparseMatrices(sc.exprs.matrix, exprs04.matrix)
+sc.exprs.matrix <- RowMergeSparseMatrices(exprs02.matrix, exprs04.matrix)
 
 # ------
 # combine phenotype matrix (colData)
 # ------
-sc.pheno.matrix <- rbind(pheno02.matrix, pheno03.matrix)
-sc.pheno.matrix <- rbind(sc.pheno.matrix, pheno04.matrix)
+#sc.pheno.matrix <- rbind(pheno02.matrix, pheno03.matrix)
+#sc.pheno.matrix <- rbind(sc.pheno.matrix, pheno04.matrix)
+sc.pheno.matrix <- rbind(pheno02.matrix, pheno04.matrix)
 # convert DFrame to data.frame
 sc.pheno.matrix <- as.data.frame(sc.pheno.matrix)
 
@@ -111,5 +112,5 @@ library(xbioc) # for pVar()
 # run!
 Est.prop = music_prop(bulk.eset = bulk.eset, sc.eset = sc.eset, clusters = 'manual_annotation', samples = 'Sample')
 
-
+res.music <- Est.prop$Est.prop.weighted
 

@@ -5,7 +5,7 @@ library(scran)
 
 
 # load in processed sc data
-load("sce02.RData")
+sce02 = load("sce02.RData")
 # load("sce03.RData")
 # load("sce04.RData")
 
@@ -60,10 +60,17 @@ write.table(sc_ref, file = "cibersortx_sc02_ref.txt", quote = FALSE, sep = "\t",
 # Mixture file
 #-----------------
 
+# bulk sample name | single-cell sample name
+#------------------------------------------
+#   17667X1          | 16030X3
+#   17667X2          | 16030X2
+#   17667X3          | 16030X4
+
+
 library(EnsDb.Hsapiens.v86)
 
 
-# load bulk data
+# load bulk data 04 (17667X3)
 load("gene_counts_17667X1-3.RData")  #gse
 
 ensembl.ids <- rownames(gse)

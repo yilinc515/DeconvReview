@@ -23,7 +23,7 @@ rowData(sce)$CHR <- location
 
 
 # ------------
-# QC: emptyDrops() gives "no counts available to estimate the ambient profile" Error
+# QC
 # assume cell calling already performed, see https://support.bioconductor.org/p/123554/#123562
 # ------------
 
@@ -31,19 +31,14 @@ unfiltered <- sce
 
 
 is.mito <- grep("MT", rowData(sce)$Symbol)
-
 stats <- perCellQCMetrics(sce, subsets=list(Mito=is.mito))
-
 sce <- addPerCellQC(sce, subsets = list(Mito=is.mito))
 sce <- addPerFeatureQC(sce)
-sce
 
 #Remove worst cells
 initialFilt <- sce$sum > 500 & sce$detected > 100
 length(which(!initialFilt))
 sce<-sce[,initialFilt]
-sce
-
 
 
 #high.mito <- isOutlier(stats$subsets_Mito_percent, type="higher")
@@ -307,6 +302,15 @@ save_pheatmap_png <- function(x, filename, width=1200, height=2000, res = 150) {
 }
 
 save_pheatmap_png(hm, "avgexp_heatmap1.png")
+
+
+# ------------
+# Cell Type annotation with scPred
+# ------------
+
+
+
+
 
 # ------------
 # Cell Type annotation with SingleR
